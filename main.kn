@@ -45,6 +45,9 @@ func main()
 	var reqBtn: @ReqBtn :: #@ReqBtn
 	do reqBtn.init(wndMain, attrGroup)
 
+	var resultEdit: wnd@Edit :: wnd@makeEdit(wndMain, 10, 300, 300, 20, %scale, %scale)
+	do resultEdit.readonly(true)
+
 	while(wnd@act())
 	end while
 end func
