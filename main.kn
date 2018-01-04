@@ -1,7 +1,34 @@
-var wndMain: wnd@Wnd
+class AttrGroup()
+	var wndAttrGroup: wnd@Group
+
+	var wndRadioPr: wnd@Radio
+	var wndRadioFa: wnd@Radio
+	var wndRadioAn: wnd@Radio
+
+	+func init(wndMain: wnd@Wnd)
+		do me.wndAttrGroup :: wnd@makeGroup(wndMain, 10, 10, 300, 50, %scale, %scale, "Attribute Group")
+		
+		do me.wndRadioPr :: wnd@makeRadio(me.wndAttrGroup, 10, 10, 60, 30, %scale, %scale, "Princess")
+		do me.wndRadioFa :: wnd@makeRadio(me.wndAttrGroup, 110, 10, 60, 30, %scale, %scale, "Fairy")
+		do me.wndRadioAn :: wnd@makeRadio(me.wndAttrGroup, 210, 10, 60, 30, %scale, %scale, "Angel")
+	end func
+
+	+func getPushAttr(): []char
+		if(me.wndRadioPr.getChk())
+			ret "Pr"
+		elif(me.wndRadioFa.getChk())
+			ret "Fa"
+		elif(me.wndRadioAn.getChk())
+			ret "An"
+		end if
+	end func
+end class
 
 func main()
-	do @wndMain :: wnd@makeWnd(null, %aspect, 800, 450, "ぴにゃリクエストforミリシタ")
+	var wndMain: wnd@Wnd :: wnd@makeWnd(null, %aspect, 320, 450, "ぴにゃリクエストforミリシタ")
+
+	var attrGroup: @AttrGroup :: #@AttrGroup
+	do attrGroup.init(wndMain)
 
 	while(wnd@act())
 	end while
