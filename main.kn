@@ -36,9 +36,15 @@ class ReqBtn()
 		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 100, 200, 50, %scale, %scale, "Request")
 		do me.wndReqBtn.onPush :: @updateEdit
 	end func
+
+	+func setOnPushFunc(f: func<(wnd@WndBase)>)
+		do me.wndReqBtn.onPush :: f
+	end func
 end class
 
 func updateEdit(wnd: wnd@WndBase)
+	var text: []char :: @attrGroup.getPushAttr()
+	do @resultEdit.setText(text)
 end func
 
 func main()
@@ -47,6 +53,7 @@ func main()
 	do @attrGroup.init(@wndMain)
 	do @reqBtn :: #@ReqBtn
 	do @reqBtn.init(@wndMain, @attrGroup)
+	do @reqBtn.setOnPushFunc(@updateEdit)
 	do @resultEdit :: wnd@makeEdit(@wndMain, 10, 300, 300, 20, %scale, %scale)
 	do @resultEdit.readonly(true)
 
