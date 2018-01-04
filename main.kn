@@ -1,3 +1,8 @@
+var wndMain: wnd@Wnd
+var attrGroup: @AttrGroup
+var reqBtn: @ReqBtn
+var resultEdit: wnd@Edit
+
 class AttrGroup()
 	var wndAttrGroup: wnd@Group
 
@@ -29,24 +34,21 @@ class ReqBtn()
 
 	+func init(wndMain: wnd@Wnd, attrGroup: @AttrGroup)
 		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 100, 200, 50, %scale, %scale, "Request")
-		do me.wndReqBtn.onPush :: btnEvent
-
-		func btnEvent(wnd: wnd@WndBase)
-		end func
+		do me.wndReqBtn.onPush :: @updateEdit
 	end func
 end class
 
+func updateEdit(wnd: wnd@WndBase)
+end func
+
 func main()
-	var wndMain: wnd@Wnd :: wnd@makeWnd(null, %aspect, 320, 450, "ぴにゃリクエストforミリシタ")
-
-	var attrGroup: @AttrGroup :: #@AttrGroup
-	do attrGroup.init(wndMain)
-
-	var reqBtn: @ReqBtn :: #@ReqBtn
-	do reqBtn.init(wndMain, attrGroup)
-
-	var resultEdit: wnd@Edit :: wnd@makeEdit(wndMain, 10, 300, 300, 20, %scale, %scale)
-	do resultEdit.readonly(true)
+	do @wndMain :: wnd@makeWnd(null, %aspect, 320, 450, "ぴにゃリクエストforミリシタ")
+	do @attrGroup :: #@AttrGroup
+	do @attrGroup.init(@wndMain)
+	do @reqBtn :: #@ReqBtn
+	do @reqBtn.init(@wndMain, @attrGroup)
+	do @resultEdit :: wnd@makeEdit(@wndMain, 10, 300, 300, 20, %scale, %scale)
+	do @resultEdit.readonly(true)
 
 	while(wnd@act())
 	end while
