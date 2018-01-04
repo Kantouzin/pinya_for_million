@@ -1,0 +1,8 @@
+var wndMain: wnd@Wnd
+
+func main()
+	do @wndMain :: wnd@makeWnd(null, %aspect, 800, 450, "ぴにゃリクエストforミリシタ")
+
+	while(wnd@act())
+	end while
+end func
