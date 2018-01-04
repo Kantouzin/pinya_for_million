@@ -24,11 +24,26 @@ class AttrGroup()
 	end func
 end class
 
+class ReqBtn()
+	var wndReqBtn: wnd@Btn
+
+	+func init(wndMain: wnd@Wnd, attrGroup: @AttrGroup)
+		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 100, 200, 50, %scale, %scale, "Request")
+		do me.wndReqBtn.onPush :: btnEvent
+
+		func btnEvent(wnd: wnd@WndBase)
+		end func
+	end func
+end class
+
 func main()
 	var wndMain: wnd@Wnd :: wnd@makeWnd(null, %aspect, 320, 450, "ぴにゃリクエストforミリシタ")
 
 	var attrGroup: @AttrGroup :: #@AttrGroup
 	do attrGroup.init(wndMain)
+
+	var reqBtn: @ReqBtn :: #@ReqBtn
+	do reqBtn.init(wndMain, attrGroup)
 
 	while(wnd@act())
 	end while
