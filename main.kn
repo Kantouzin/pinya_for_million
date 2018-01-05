@@ -1,0 +1,79 @@
+var wndMain: wnd@Wnd
+var attrGroup: @AttrGroup
+var reqBtn: @ReqBtn
+var resultEdit: wnd@Edit
+
+class AttrGroup()
+	var wndAttrGroup: wnd@Group
+
+	var wndRadioPr: wnd@Radio
+	var wndRadioFa: wnd@Radio
+	var wndRadioAn: wnd@Radio
+
+	+func init(wndMain: wnd@Wnd)
+		do me.wndAttrGroup :: wnd@makeGroup(wndMain, 10, 10, 300, 50, %scale, %scale, "Attribute Group")
+		
+		do me.wndRadioPr :: wnd@makeRadio(me.wndAttrGroup, 10, 10, 60, 30, %scale, %scale, "Princess")
+		do me.wndRadioFa :: wnd@makeRadio(me.wndAttrGroup, 110, 10, 60, 30, %scale, %scale, "Fairy")
+		do me.wndRadioAn :: wnd@makeRadio(me.wndAttrGroup, 210, 10, 60, 30, %scale, %scale, "Angel")
+	end func
+
+	+func getPushAttr(): []char
+		if(me.wndRadioPr.getChk())
+			ret "Pr"
+		elif(me.wndRadioFa.getChk())
+			ret "Fa"
+		elif(me.wndRadioAn.getChk())
+			ret "An"
+		end if
+	end func
+end class
+
+class ReqBtn()
+	var wndReqBtn: wnd@Btn
+
+	+func init(wndMain: wnd@Wnd, attrGroup: @AttrGroup)
+		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 100, 200, 50, %scale, %scale, "Request")
+		do me.wndReqBtn.onPush :: @updateEdit
+	end func
+
+	+func setOnPushFunc(f: func<(wnd@WndBase)>)
+		do me.wndReqBtn.onPush :: f
+	end func
+end class
+
+func updateEdit(wnd: wnd@WndBase)
+	var musicList: list<[]char> :: #list<[]char>
+
+	var reader: file@Reader :: file@makeReader("music.txt")
+	do reader.delimiter([','])
+
+	while(!reader.term())
+		var title: []char :: reader.readStr()
+		var attr: []char :: reader.readStr()
+
+		if(attr = @attrGroup.getPushAttr())
+			do musicList.add(title)
+		end if
+	end while
+
+	var musicArray: [][]char :: musicList.toArray()
+	do musicArray.shuffle()
+
+	var text: []char :: musicArray[0]
+	do @resultEdit.setText(text)
+end func
+
+func main()
+	do @wndMain :: wnd@makeWnd(null, %aspect, 320, 450, "ぴにゃリクエストforミリシタ")
+	do @attrGroup :: #@AttrGroup
+	do @attrGroup.init(@wndMain)
+	do @reqBtn :: #@ReqBtn
+	do @reqBtn.init(@wndMain, @attrGroup)
+	do @reqBtn.setOnPushFunc(@updateEdit)
+	do @resultEdit :: wnd@makeEdit(@wndMain, 10, 300, 300, 20, %scale, %scale)
+	do @resultEdit.readonly(true)
+
+	while(wnd@act())
+	end while
+end func
