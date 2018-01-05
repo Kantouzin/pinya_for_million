@@ -16,6 +16,8 @@ class AttrGroup()
 		do me.wndRadioPr :: wnd@makeRadio(me.wndAttrGroup, 10, 10, 60, 30, %scale, %scale, "Princess")
 		do me.wndRadioFa :: wnd@makeRadio(me.wndAttrGroup, 110, 10, 60, 30, %scale, %scale, "Fairy")
 		do me.wndRadioAn :: wnd@makeRadio(me.wndAttrGroup, 210, 10, 60, 30, %scale, %scale, "Angel")
+
+		do me.wndRadioPr.setChk(true)
 	end func
 
 	+func getPushAttr(): []char
