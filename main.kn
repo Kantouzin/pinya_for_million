@@ -43,7 +43,24 @@ class ReqBtn()
 end class
 
 func updateEdit(wnd: wnd@WndBase)
-	var text: []char :: @attrGroup.getPushAttr()
+	var musicList: list<[]char> :: #list<[]char>
+
+	var reader: file@Reader :: file@makeReader("music.txt")
+	do reader.delimiter([','])
+
+	while(!reader.term())
+		var title: []char :: reader.readStr()
+		var attr: []char :: reader.readStr()
+
+		if(attr = @attrGroup.getPushAttr())
+			do musicList.add(title)
+		end if
+	end while
+
+	var musicArray: [][]char :: musicList.toArray()
+	do musicArray.shuffle()
+
+	var text: []char :: musicArray[0]
 	do @resultEdit.setText(text)
 end func
 
