@@ -9,13 +9,15 @@ class AttrGroup()
 	var wndRadioPr: wnd@Radio
 	var wndRadioFa: wnd@Radio
 	var wndRadioAn: wnd@Radio
+	var wndRadioAll: wnd@Radio
 
 	+func init(wndMain: wnd@Wnd)
-		do me.wndAttrGroup :: wnd@makeGroup(wndMain, 10, 10, 300, 50, %scale, %scale, "Attribute Group")
+		do me.wndAttrGroup :: wnd@makeGroup(wndMain, 10, 10, 300, 80, %scale, %scale, "Attribute Group")
 		
 		do me.wndRadioPr :: wnd@makeRadio(me.wndAttrGroup, 10, 10, 60, 30, %scale, %scale, "Princess")
 		do me.wndRadioFa :: wnd@makeRadio(me.wndAttrGroup, 110, 10, 60, 30, %scale, %scale, "Fairy")
 		do me.wndRadioAn :: wnd@makeRadio(me.wndAttrGroup, 210, 10, 60, 30, %scale, %scale, "Angel")
+		do me.wndRadioAll :: wnd@makeRadio(me.wndAttrGroup, 10, 40, 60, 30, %scale, %scale, "All")
 
 		do me.wndRadioPr.setChk(true)
 	end func
@@ -27,6 +29,8 @@ class AttrGroup()
 			ret "Fa"
 		elif(me.wndRadioAn.getChk())
 			ret "An"
+		elif(me.wndRadioAll.getChk())
+			ret "All"
 		end if
 	end func
 end class
