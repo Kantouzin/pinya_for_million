@@ -39,7 +39,7 @@ class ReqBtn()
 	var wndReqBtn: wnd@Btn
 
 	+func init(wndMain: wnd@Wnd, attrGroup: @AttrGroup)
-		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 100, 200, 50, %scale, %scale, "Request")
+		do me.wndReqBtn :: wnd@makeBtn(wndMain, 60, 150, 200, 50, %scale, %scale, "Request")
 		do me.wndReqBtn.onPush :: @updateEdit
 	end func
 
